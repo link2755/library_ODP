@@ -7,6 +7,7 @@ function Book(title, author, pagesNumber, imageUrl) {
   this.author = author;
   this.pagesNumber = pagesNumber;
   this.imageUrl = imageUrl;
+  isRead = true;
 }
 
 function newBook(){
@@ -38,7 +39,8 @@ function loadBooks() {
 
 function loadABook(book) {
     const bookContainer = document.createElement('div');
-    bookContainer.className = "book-container";
+    bookContainer.className = "book-container read";
+    bookContainer.id = myLibrary.length;
 
     const image = document.createElement('img');
     image.src = book.imageUrl;
@@ -47,13 +49,14 @@ function loadABook(book) {
     title.textContent = book.title;
     
     const author = document.createElement('span');
-    author.textContent = ` -${book.author}`;
+    author.textContent = `  -${book.author}`;
 
     const pages = document.createElement('p');
     pages.textContent = `Pages: ${book.pagesNumber}`;
 
     const button = document.createElement('button');
     button.textContent = 'Read';
+    button.addEventListener('click', changeRead)
 
     title.appendChild(author);
 
@@ -65,6 +68,22 @@ function loadABook(book) {
     main.appendChild(bookContainer);
 }
 
+function changeRead() {
+    const bookSelected = this.parentElement;
+    
+    if(bookSelected.isRead == true){
+        bookSelected.isRead = false;
+        bookSelected.classList.remove('read');
+        bookSelected.classList.add('not-read')
+    }else{
+        bookSelected.isRead = true;
+        bookSelected.classList.remove('not-read');
+        bookSelected.classList.add('read');
+    }
+}
+
+
+
 
 
 
@@ -75,3 +94,31 @@ addBookToLibrary(senhorDosAneis);
 addBookToLibrary(haha);
 addBookToLibrary(zeze);
 
+
+
+//Modal
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
