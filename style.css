@@ -1,0 +1,12 @@
+.book-container {
+    display: inline-block;
+    text-align: center;
+    justify-content: center;
+    border: 1px solid black;
+    margin: 20px;
+}
+
+img{
+    max-width: 210px;
+    max-height: 300px;
+}
