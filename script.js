@@ -8,6 +8,7 @@ function Book(title, author, pagesNumber, imageUrl, isRead) {
   this.pagesNumber = pagesNumber;
   this.imageUrl = imageUrl;
   this.isRead = isRead ? 'read' : 'not-read';
+  this.id = myLibrary.length;
 }
 
 function addNewBook(){
@@ -55,7 +56,7 @@ function loadABook(book) {
 
 
     bookContainer.className = `book-container ${book.isRead}`;
-    bookContainer.id = myLibrary.length;
+    bookContainer.id = book.id;
 
     const image = document.createElement('img');
     image.src = book.imageUrl;
@@ -69,15 +70,21 @@ function loadABook(book) {
     const pages = document.createElement('p');
     pages.textContent = `Pages: ${book.pagesNumber}`;
 
+    const remove = document.createElement('button');
+    remove.textContent = "Remove"
+    remove.addEventListener('click', removeBook);
+
     const button = document.createElement('button');
     button.textContent = 'Read';
     button.addEventListener('click', changeRead)
+
 
     title.appendChild(author);
 
     bookContainer.appendChild(image);
     bookContainer.appendChild(title);
     bookContainer.appendChild(pages);
+    bookContainer.appendChild(remove);
     bookContainer.appendChild(button);
 
     main.appendChild(bookContainer);
@@ -97,12 +104,29 @@ function changeRead() {
     }
 }
 
+function removeBook(){
+    const removedBook = this.parentElement;
+    main.removeChild(this.parentElement);
 
+    updateAllId()
+}
 
+function updateAllId(){
+    const bookContainers = document.querySelectorAll('.book-container');
+    console.log(bookContainers);
+    bookContainers.forEach((book, index) => {
+        myLibrary[index].id = index;
+        book.id = index;
+    })
+}
 
 let senhorDosAneis = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
-let haha = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
-let zeze = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", true);
+let haha = new Book("Harry ppppp", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
+let zeze = new Book("Harry pot222222ter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", true);
+
+senhorDosAneis.id = 0;
+haha.id = 1;
+zeze.id = 2;
 addBookToLibrary(senhorDosAneis);
 addBookToLibrary(haha);
 addBookToLibrary(zeze);
