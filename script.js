@@ -2,23 +2,31 @@ const main = document.querySelector("main");
 
 let myLibrary = [];
 
-function Book(title, author, pagesNumber, imageUrl) {
+function Book(title, author, pagesNumber, imageUrl, isRead) {
   this.title = title;
   this.author = author;
   this.pagesNumber = pagesNumber;
   this.imageUrl = imageUrl;
-  isRead = true;
+  this.isRead = isRead ? 'read' : 'not-read';
 }
 
-function newBook(){
-    const title = prompt("Title:");
-    const author = prompt("Autor:");
-    const pagesNumber = prompt("Number of Pages:");
-    const imageUrl = prompt("Url for book Cover:");
-    
-    const book = new Book(title, author, pagesNumber, imageUrl)
+function addNewBook(){
+
+    const title = document.getElementById("book-title").value;
+    const author = document.getElementById("author").value;
+    const pagesNumber = document.getElementById("pages").value;
+    const imageUrl = document.getElementById("book-img").value;
+    const isRead = (document.getElementById("is-read").checked);
+    console.log(isRead);
+
+    const book = new Book(title, author, pagesNumber, imageUrl, isRead);
     addBookToLibrary(book);
+    
+    //reseting forms and closing popup
+
 }
+
+
 
 function addBookToLibrary(book) {
 
@@ -39,7 +47,10 @@ function loadBooks() {
 
 function loadABook(book) {
     const bookContainer = document.createElement('div');
-    bookContainer.className = "book-container read";
+
+
+
+    bookContainer.className = `book-container ${book.isRead}`;
     bookContainer.id = myLibrary.length;
 
     const image = document.createElement('img');
@@ -69,14 +80,14 @@ function loadABook(book) {
 }
 
 function changeRead() {
-    const bookSelected = this.parentElement;
-    
-    if(bookSelected.isRead == true){
-        bookSelected.isRead = false;
+    let bookSelected = this.parentElement;
+
+    if(bookSelected.classList.contains('read')){
+        bookSelected.isRead = 'not-read';
         bookSelected.classList.remove('read');
         bookSelected.classList.add('not-read')
     }else{
-        bookSelected.isRead = true;
+        bookSelected.isRead = 'read';
         bookSelected.classList.remove('not-read');
         bookSelected.classList.add('read');
     }
@@ -85,11 +96,9 @@ function changeRead() {
 
 
 
-
-
-let senhorDosAneis = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg");
-let haha = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg");
-let zeze = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg");
+let senhorDosAneis = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
+let haha = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
+let zeze = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", true);
 addBookToLibrary(senhorDosAneis);
 addBookToLibrary(haha);
 addBookToLibrary(zeze);
@@ -101,7 +110,7 @@ addBookToLibrary(zeze);
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+var btn = document.getElementById("new-book-button");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -122,3 +131,10 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+
+const form = document.querySelector("form");
+form.onsubmit = addNewBook;
+
+function handleForm(event) { event.preventDefault(); } 
+form.addEventListener('submit', handleForm);

@@ -11,8 +11,31 @@
 <body>
     <main>
 
-        <button onclick="newBook()">New Book</button>
+        <button id="new-book-button">Open Modal</button>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form>
+                    <label for="title">Book Title:</label>
+                    <input type="text" id="book-title" name="book-title" required><br><br>
 
+                    <label for="author">Author Name:</label>
+                    <input type="text" id="author" name="author" required><br><br>
+
+                    <label for="pages">Number of Pages:</label>
+                    <input type="number" id="pages" name="pages" required><br><br>
+
+
+                    <label for="img">An Url with the book cover:</label>
+                    <input type="url" id="book-img" name="book-img" required><br><br>
+
+                    <label for="read">Is the book already read?:</label>
+                    <input type="checkbox" id="is-read" name="is-read"><br><br>
+
+                    <input type="submit" value="Submit">
+                  </form>
+            </div>
+        </div>
 
         <div class='book-container'>
             <img src="https://i.pinimg.com/originals/f4/03/9a/f4039a5f52929f26f5a76cfbefd5f735.jpg"></img>
@@ -21,16 +44,8 @@
             <button>Read</button>
         </div>
 
-        <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Open Modal</button>
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
-        </div>
-        </div>
+
+
 
 
     </main>
