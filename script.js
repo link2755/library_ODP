@@ -1,6 +1,7 @@
 const main = document.querySelector("main");
 
 let myLibrary = [];
+loadFromLocalStorage();
 
 function Book(title, author, pagesNumber, imageUrl, isRead) {
   this.title = title;
@@ -25,9 +26,10 @@ function addNewBook(){
     //reseting forms and closing popup
     const form = document.querySelector("form");
     form.reset();
-    
     //close the modal in submition
     modal.style.display = "none";
+
+    updateLocalStorage();
 
 }
 
@@ -45,10 +47,11 @@ function addBookToLibrary(book) {
 }
 
 function loadBooks() {
-    myLibrary.forEach(book => {
-        LoadABook(book);
-    })
+    for(let i in myLibrary){
+        loadABook(myLibrary[i]);
+    }
 }
+
 
 function loadABook(book) {
     const bookContainer = document.createElement('div');
@@ -90,46 +93,104 @@ function loadABook(book) {
     main.appendChild(bookContainer);
 }
 
+
 function changeRead() {
-    let bookSelected = this.parentElement;
+    const bookSelected = this.parentElement;
+    const id = bookSelected.id;
 
     if(bookSelected.classList.contains('read')){
-        bookSelected.isRead = 'not-read';
+        myLibrary[id].isRead = 'not-read';
         bookSelected.classList.remove('read');
         bookSelected.classList.add('not-read')
     }else{
-        bookSelected.isRead = 'read';
+        myLibrary[id].isRead = 'read';
         bookSelected.classList.remove('not-read');
         bookSelected.classList.add('read');
     }
+    updateLocalStorage();
 }
 
 function removeBook(){
     const removedBook = this.parentElement;
+    myLibrary.splice(removedBook.id, 1);
     main.removeChild(this.parentElement);
 
     updateAllId()
+    updateLocalStorage();
 }
 
+//update Ids after a removal
 function updateAllId(){
     const bookContainers = document.querySelectorAll('.book-container');
-    console.log(bookContainers);
     bookContainers.forEach((book, index) => {
         myLibrary[index].id = index;
         book.id = index;
     })
 }
 
-let senhorDosAneis = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
-let haha = new Book("Harry ppppp", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
-let zeze = new Book("Harry pot222222ter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", true);
+function updateLocalStorage(){
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+    }
+}
 
-senhorDosAneis.id = 0;
-haha.id = 1;
-zeze.id = 2;
-addBookToLibrary(senhorDosAneis);
-addBookToLibrary(haha);
-addBookToLibrary(zeze);
+function loadFromLocalStorage(){
+    if (storageAvailable('localStorage')) {
+        
+        //checks if theres already a stored library
+        if(!localStorage.getItem('myLibrary')){
+            localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+
+        }else{
+            myLibrary = JSON.parse(localStorage.getItem('myLibrary'));
+        }
+    }
+      else {
+        alert("Sorry, your browser don't supor local Storage, your informations won't be saved")
+    }
+}
+
+//function checks if local storage is avaible in browser
+function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
+}
+
+
+
+
+
+
+// let senhorDosAneis = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
+// let haha = new Book("Harry ppppp", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
+// let zeze = new Book("Harry pot222222ter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", true);
+
+// senhorDosAneis.id = 0;
+// haha.id = 1;
+// zeze.id = 2;
+// addBookToLibrary(senhorDosAneis);
+// addBookToLibrary(haha);
+// addBookToLibrary(zeze);
 
 
 
@@ -159,3 +220,6 @@ form.onsubmit = addNewBook;
 
 function handleForm(event) { event.preventDefault(); } 
 form.addEventListener('submit', handleForm);
+
+
+loadBooks();
