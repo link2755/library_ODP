@@ -49,7 +49,7 @@ In this project I practiced mainly objects usage, DOM manipulation with javascri
 
 ## Getting Started
 
-You can check Live preview of the site <a href="https://link2755.github.io/ETCH-A-SKETCH_ODP/" target="blank">HERE<a>
+You can check Live preview of the site <a href="https://link2755.github.io/library_ODP/" target="blank">HERE<a>
 
 <!-- LICENSE -->
 ## License
