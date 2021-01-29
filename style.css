@@ -57,10 +57,10 @@ header>span {
     text-align: center;
     justify-content: center;
     border: 2px solid black;
-    margin: 20px;
+    margin: 40px 20px;
     padding: 10px;
+    width:230px;
     border-radius: 10px;
-
     background-color: #7ee8fa;
     background-image: linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%);
 
@@ -83,13 +83,13 @@ p{
     font-size: 25px;
 }
 
-span {
+.author-name {
     font-size: 15px;
     font-weight: bold;
     font-style: italic;
 }
 
-img{
+.book-cover{
     max-width: 210px;
     max-height: 300px;
     border-radius: 10px;

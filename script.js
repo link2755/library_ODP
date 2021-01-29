@@ -28,14 +28,13 @@ function addNewBook(){
     //reseting forms and closing popup
     const form = document.querySelector("form");
     form.reset();
+
     //close the modal in submition
     modal.style.display = "none";
 
     updateLocalStorage();
 
 }
-
-
 
 function addBookToLibrary(book) {
 
@@ -62,12 +61,14 @@ function loadSingleBook(book) {
     bookContainer.id = book.id;
 
     const image = document.createElement('img');
+    image.classList = 'book-cover'
     image.src = book.imageUrl;
 
     const title = document.createElement('p');
     title.textContent = book.title;
     
     const author = document.createElement('span');
+    author.className = 'author-name'
     author.textContent = `  -${book.author}`;
 
     const pages = document.createElement('p');
@@ -151,7 +152,7 @@ function loadFromLocalStorage(){
         }
     }
       else {
-        alert("Sorry, your browser don't supor local Storage, your informations won't be saved")
+        alert("Sorry, your browser don't support local Storage, your informations won't be saved")
     }
 }
 
