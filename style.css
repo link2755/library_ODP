@@ -1,3 +1,57 @@
+html {
+  background: linear-gradient(to bottom, #ADC26B 0%, #00142e 23%) fixed;
+  height: 100%;
+  width: 100%;
+}
+
+header {
+  display: flex;
+  height: 5vh;
+  max-height: 60px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header>span {
+  font-family: 'Roboto', sans-serif;
+
+  font-size: 30px;
+}
+
+@media screen and (max-width: 600px) {
+  header>span {
+    font-size: 5vw;
+  }
+}
+
+#new-book-button {
+  background-color: #4CAF50;
+  border: 1px solid white;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  position: fixed;
+  top: 10px;
+  right: 25px;
+  border-radius: 15px;
+  transition: 0.5s;
+}
+
+@media screen and (max-width: 600px) {
+  #new-book-button {
+    top: 0;
+    right: 0;
+    padding: 10px;
+  }
+}
+
+.logo {
+  height: 100%;
+}
+
 .book-container {
     display: inline-block;
     text-align: center;
@@ -9,6 +63,8 @@
 
     background-color: #7ee8fa;
     background-image: linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%);
+
+    transition: 0.5s;
 
 }
 
@@ -39,6 +95,47 @@ img{
     border-radius: 10px;
 }
 
+.delete-button {
+  background-color: #ff0606;
+  border: 1px solid white;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 15px;
+  transition: 0.5s;
+  margin: 5px;
+
+}
+
+.delete-button:hover {
+  box-shadow: inset 0 0 0 2em white;
+  border: 1px solid red;
+  color: red;
+}
+
+
+
+.read-button {
+  background-color: #00b30f;
+  border: 1px solid white;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 15px;
+  transition: 0.5s;
+  margin: 5px;
+}
+
+.read-button:hover {
+  box-shadow: inset 0 0 0 2em white;
+  border: 1px solid #00b30f;
+  color: #00b30f;
+}
+
+
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -48,18 +145,21 @@ img{
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    overflow: hidden; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
   
   /* Modal Content/Box */
   .modal-content {
-    background-color: #fefefe;
+    border-radius: 15px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    background: linear-gradient(to left, #232400 0%, #000000 100%);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width:250px; /* Could be more or less, depending on screen size */
   }
   
   /* The Close Button */

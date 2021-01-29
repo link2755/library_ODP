@@ -3,6 +3,8 @@ const main = document.querySelector("main");
 let myLibrary = [];
 loadFromLocalStorage();
 
+loadBooks();
+
 function Book(title, author, pagesNumber, imageUrl, isRead) {
   this.title = title;
   this.author = author;
@@ -42,21 +44,19 @@ function addBookToLibrary(book) {
     }
 
     myLibrary.push(book);
-    loadABook(book);
+    loadSingleBook(book);
     return true;
 }
 
 function loadBooks() {
     for(let i in myLibrary){
-        loadABook(myLibrary[i]);
+        loadSingleBook(myLibrary[i]);
     }
 }
 
 
-function loadABook(book) {
+function loadSingleBook(book) {
     const bookContainer = document.createElement('div');
-
-
 
     bookContainer.className = `book-container ${book.isRead}`;
     bookContainer.id = book.id;
@@ -73,12 +73,14 @@ function loadABook(book) {
     const pages = document.createElement('p');
     pages.textContent = `Pages: ${book.pagesNumber}`;
 
-    const remove = document.createElement('button');
-    remove.textContent = "Remove"
-    remove.addEventListener('click', removeBook);
+    const deleteBook = document.createElement('button');
+    deleteBook.className = 'delete-button'
+    deleteBook.textContent = "Delete"
+    deleteBook.addEventListener('click', removeBook);
 
     const button = document.createElement('button');
-    button.textContent = 'Read';
+    button.className = 'read-button'
+    button.textContent = book.isRead == 'read' ? 'Read' : 'Mark as Read';
     button.addEventListener('click', changeRead)
 
 
@@ -87,7 +89,7 @@ function loadABook(book) {
     bookContainer.appendChild(image);
     bookContainer.appendChild(title);
     bookContainer.appendChild(pages);
-    bookContainer.appendChild(remove);
+    bookContainer.appendChild(deleteBook);
     bookContainer.appendChild(button);
 
     main.appendChild(bookContainer);
@@ -102,10 +104,13 @@ function changeRead() {
         myLibrary[id].isRead = 'not-read';
         bookSelected.classList.remove('read');
         bookSelected.classList.add('not-read')
+        this.textContent = "Mark as Read"
     }else{
         myLibrary[id].isRead = 'read';
         bookSelected.classList.remove('not-read');
         bookSelected.classList.add('read');
+        this.textContent = "Read"
+
     }
     updateLocalStorage();
 }
@@ -176,24 +181,6 @@ function storageAvailable(type) {
     }
 }
 
-
-
-
-
-
-// let senhorDosAneis = new Book("Harry potter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
-// let haha = new Book("Harry ppppp", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", false);
-// let zeze = new Book("Harry pot222222ter", "J. K. Rowling", 522, "https://media.harrypotterfanzone.com/deathly-hallows-us-childrens-edition.jpg", true);
-
-// senhorDosAneis.id = 0;
-// haha.id = 1;
-// zeze.id = 2;
-// addBookToLibrary(senhorDosAneis);
-// addBookToLibrary(haha);
-// addBookToLibrary(zeze);
-
-
-
 //Modal
 // Get the modal
 const modal = document.getElementById("myModal");
@@ -214,12 +201,15 @@ span.onclick = function() {
   modal.style.display = "none";
 }
 
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+}
 
 const form = document.querySelector("form");
 form.onsubmit = addNewBook;
 
 function handleForm(event) { event.preventDefault(); } 
 form.addEventListener('submit', handleForm);
-
-
-loadBooks();
